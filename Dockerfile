@@ -13,10 +13,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zip \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# 2. Configurar Apache (Puerto 8080 + Rewrite)
-RUN a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/* \
+    a2enmod rewrite \
     && sed -i 's/80/8080/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
 # 3. Instalar Composer
@@ -46,10 +44,8 @@ COPY storage ./storage
 # Aquí corregimos el segundo error: Unimos los dos comandos 'sed' en un solo RUN
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf \
-    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-# 9. Finalizar y Permisos
-RUN composer dump-autoload --optimize \
+    && sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
+    composer dump-autoload --optimize \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
