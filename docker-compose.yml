@@ -10,7 +10,7 @@ services:
     container_name: lego_app
     restart: unless-stopped
     ports:
-      - "8080:80" # Tu API estará en http://localhost:8080
+      - "8080:8080" # Tu API estará en http://localhost:8080
     environment:
       # Aquí sobreescribimos el .env de Laravel para que hable con el contenedor 'db'
       DB_CONNECTION: mysql
