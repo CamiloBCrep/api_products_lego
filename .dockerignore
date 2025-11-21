@@ -1,0 +1,26 @@
+.git
+.gitignore
+.env
+.env.example
+Dockerfile
+docker-compose.yml
+sonar-project.properties
+README.md
+
+# Directorios de dependencias (para que se instalen limpias dentro)
+/vendor
+/node_modules
+
+# Archivos de sistema o IDE
+.idea
+.vscode
+.DS_Store
+
+# Archivos de pruebas y logs
+/tests
+/storage/logs
+/storage/framework/sessions
+/storage/framework/views
+/storage/framework/cache
+coverage.xml
+phpunit.xml
