@@ -24,7 +24,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // --- Validación (¡MUY RECOMENDADO!) ---
+        // --- Validación ---
         // Esto valida que los datos que envía tu app Flutter sean correctos
         // antes de intentar guardar.
         $validatedData = $request->validate([
@@ -35,9 +35,6 @@ class ProductController extends Controller
             'image_path' => 'nullable|string', // 'nullable' significa que es opcional
         ]);
 
-        // Lógica como en tu imagen: Crea un nuevo producto usando
-        // los datos validados. Gracias al '$fillable' en tu Modelo,
-        // esto funciona de forma segura.
         $product = Product::create($validatedData);
 
         // Devuelve el producto que se acaba de crear (con su nuevo ID)
@@ -51,10 +48,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // Lógica como en tu imagen:
-        // Gracias a la magia de Laravel (Route-Model Binding),
-        // Laravel automáticamente busca el producto por su ID (ej: /api/products/5)
-        // y te lo entrega en la variable $product.
         return $product;
     }
 
@@ -64,8 +57,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        // Validación (igual que en store, pero a veces 'required' no es necesario
-        // si permites actualizaciones parciales, pero lo mantendremos simple).
+        // Validación
         $validatedData = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'price' => 'sometimes|required|numeric|min:0',
@@ -74,7 +66,6 @@ class ProductController extends Controller
             'image_path' => 'nullable|string',
         ]);
 
-        // Lógica como en tu imagen (adaptada):
         // Actualiza el producto que Laravel ya encontró por nosotros ($product)
         // con los nuevos datos validados.
         $product->update($validatedData);
@@ -89,7 +80,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Lógica como en tu imagen:
         // Laravel encuentra el producto por su ID y $product->delete() lo borra.
         $product->delete();
 
